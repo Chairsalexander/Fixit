@@ -24,5 +24,5 @@ test5: %.c
 	$(CC) $(CFLAGS) -c main.c -o main.o 1 test5.c # from https://www.gnu.org/software/make/manual/make.html
 
 clean:
-	rm -f *.o compile
-.PHONY: build clean
+	rm -f *.o main.o compile
+.PHONY: clean
