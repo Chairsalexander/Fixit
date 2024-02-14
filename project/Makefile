@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -g -Wall
 ODIR = proj1_out
+LDIR =../lib
 
 _OBJ = stack.o queue.o single_linked_node.o double_linked_node.o main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
@@ -8,7 +9,7 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 $(ODIR)/%.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-main: $(OBJ)
+main: main.c
 	$(CC) -o $@ $^ $(CFLAGS)
 
 test1: main.c test1.c
