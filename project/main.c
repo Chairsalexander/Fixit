@@ -27,91 +27,87 @@
 #endif
 //using namespace std;
 
+int searchValue(int arr[], int size, int value) {
+	for(int i = 0; i < size; i++) {
+		if(arr[i] == value) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+//Parent should be tracking array of children
+
 
 int main(int argc, const char * argv[]) {
+
     pid_t parent_pid = getpid();
-
     printf("parent pid is %d\n", parent_pid);
-
-	//Does argv give the address or actual value of 2nd input?
+    
     //Make an array and stoire the PID vales in it
-
-	int counter = atoi(argv[1]);
-	int finished_pids[counter];	
-	int status;
-
+    int num_child = atoi(argv[1]);
+    pid_t myArray[num_child]; 
+	int finishedArray[num_child];
+	printf("count = %d\n", num_child);
+	pid_t child_pid;
+	
+    int status;
     //Trying ot figureout the loop based off the number input by the user in terminal to identify how many children to make
-    //wait() - returns PID when finished
-    //gets each program in the folder and forks
-	const char *files[5] = {"test1.c", "test2.c", "test3.c", "test4.c", "test5.c"};
-    for(int i = 0; i < counter; i++)            
+    //wait() - returns PID when finished - gets each program in the folder and forks
+    const char *files[5] = {"./test1", "./test2", "./test3", "./test4", "./test5"};
+	const char *files1[5] = {"test1", "test2", "test3", "test4", "test5"};
+    for(int i = 0; i < num_child; i++)            
     {
-		//int random = rand() % (counter+1); //https://www.geeksforgeeks.org/c-rand-function/
-        pid_t child_pid = fork();
+		int random = rand() % (5); //https://www.geeksforgeeks.org/c-rand-function/
+        
+		//Need conditional state around fork to make sure onyl parent funtion calls fork
+		if(parent_pid == getpid())
+		{
+			child_pid = fork();
+		}
 
 		if(child_pid < 0)
 		{
-			//error
-			perror("fork");
+			exit(EXIT_FAILURE);
 		}
-		else if(child_pid == 0)
+
+        else if(child_pid == 0)
         {
-			//finished_pids[i] = getpid();
-			printf("started child %d with pid %d\n", i+1, get_pid());
-			//STart Child precces
+			//Child Process
+			child_pid = getpid();
+            printf("started child %d with pid %d, rv %d\n", i+1, child_pid, random);
         //RUN THE Excecutable which will run a specific test file
         //Either make a random number generator to chppse which executable to run to make it run 
         //Like a round robin, 1, 2, 3, 4, 5, 1, 2, ....
-
-            //execlp(files[random], "ls", NULL); //From notes 
-        } 
-
-        /*else if (child_pid < 0) {
-			while (child_pid < 0) {
-				printf("fork failed, again\n");
-				child_pid = fork();
-				execlp(files[random], "ls", NULL);
-			}
-		}
-        */
+            execlp(files[random], files1[random], NULL); //From notes 
+        }
+		else
+		{
+			myArray[i] = child_pid;
+		} 
 
     }
-
-	for(int i = 0; i < counter; i++)
-	{
-		int status;
-		pid_t finished_pid; 
-		finished_pid = wait(&status);
-
-		if(finished_pid > 0)
-		{
-			//Store pid of finished child into an array
-			finished_pids[i] = finished_pid;
-		}
-
-	}
-
+	
     //For loop to see when the PIDs have finished using wait()
     //Order in whihc they finish has nothig to do with how they started
     //Loop that assigns the CHild number to the order of which the PIDs have finished
-    for(int i = 0; i <= counter; i++)
+    //each iteration collects the order of PIDs finishing. 1 iteration for one PID to finish
+	for(int i = 0; i < num_child; i++)
     {
-        int num = wait(NULL); //From notes and OS_lec3_IPC.pdf		
-        int* location = finished_pids;
-        if(location <= finished_pids + counter)
-        {
-            printf("Child %d (PID %n) Finished\n", i + 1, num);
-        }
-    }
-    
-
-    /*
-    if(child_pid == 0)
-    {
-        cout << "started child with pid " << getpid() << endl;
+        //int searchValue(int arr[], int size, int value)
+		
+		int status = 0;
+		pid_t num = wait(&status); //From notes and OS_lec3_IPC.pdf		
         
-        //Child proccess logic
-        cout << "Child (PID " << getpid() << ") Finished" << endl;
+		int value = searchValue(myArray, num_child, num);
+		
+		if(num > 0)
+        {
+            printf("Child %d (PID %d) Finished\n", value + 1, num);
+        }
+
     }
-    */
+	
+    
+    
 }
