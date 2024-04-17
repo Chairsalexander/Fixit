@@ -1,34 +1,11 @@
-#include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-
+#include <pthread.h>
 #include "common_threads.h"
+#include <semaphore.h>
+#include <time.h>
+#include <stdlib.h>
 
-/**
- * Now go one step further by implementing a general solution to **barrier synchronization**.
- *
- * Assume there are two points in a sequential piece of code, called *P1* and *P2*.
- *
- * Putting a **barrier** between *P1* and *P2* guarantees that all threads
- * will execute *P1* before any one thread executes *P2*.
- *
- * Your task: write the code to implement a `barrier()` function that can be used in this manner.
- *
- * It is safe to assume you know *N* (the total number of threads in the running program) and
- * that all *N* threads will try to enter the barrier.
- *
- * Again, you should likely use two semaphores to achieve the solution, and some other integers to count things.
- *
- * See `barrier.c` for details.
- */
-
-// If done correctly, each child should print their "before" message
-// before either prints their "after" message. Test by adding sleep(1)
-// calls in various locations.
-
-// You likely need two semaphores to do this correctly, and some
-// other integers to track things.
 
 typedef struct __barrier_t {
 
@@ -54,10 +31,6 @@ void barrier_init(barrier_t *b, int num_threads) {
     sem_init(&b->sem_barrier, 0, (unsigned int) 1);
 }
 
-/**
- * Thanks internet
- * https://stackoverflow.com/questions/6331301/implementing-an-n-process-barrier-using-semaphores
- */
 void barrier(barrier_t *b) {
 
     // barrier code goes here
@@ -67,11 +40,11 @@ void barrier(barrier_t *b) {
 
 
     if (b->count == b->n) {
-        sem_post(&b->sem_barrier); // unblock ONE thread
+        sem_post(&b->sem_barrier); 
     }
 
     sem_wait(&b->sem_barrier);
-    sem_post(&b->sem_barrier); // once we are unblocked, it's our duty to unblock the next thread
+    sem_post(&b->sem_barrier); 
 }
 
 //

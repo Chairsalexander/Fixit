@@ -1,0 +1,19 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     a.out
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000038C0, symSize: 0x2D0 }
+  - { offsetInCU: 0x3F, offset: 0x3F, size: 0x8, addend: 0x0, symName: _buffer, symObjAddr: 0x68B8, symBinAddr: 0x1000080A0, symSize: 0x0 }
+  - { offsetInCU: 0x60, offset: 0x60, size: 0x8, addend: 0x0, symName: _count, symObjAddr: 0x68C0, symBinAddr: 0x1000080A8, symSize: 0x0 }
+  - { offsetInCU: 0x75, offset: 0x75, size: 0x8, addend: 0x0, symName: _in, symObjAddr: 0x68C4, symBinAddr: 0x1000080AC, symSize: 0x0 }
+  - { offsetInCU: 0x8A, offset: 0x8A, size: 0x8, addend: 0x0, symName: _out, symObjAddr: 0x68C8, symBinAddr: 0x1000080B0, symSize: 0x0 }
+  - { offsetInCU: 0x9F, offset: 0x9F, size: 0x8, addend: 0x0, symName: _num_buffer, symObjAddr: 0x68CC, symBinAddr: 0x1000080B4, symSize: 0x0 }
+  - { offsetInCU: 0xB4, offset: 0xB4, size: 0x8, addend: 0x0, symName: _num_producers, symObjAddr: 0x68D0, symBinAddr: 0x1000080B8, symSize: 0x0 }
+  - { offsetInCU: 0xC9, offset: 0xC9, size: 0x8, addend: 0x0, symName: _num_consumers, symObjAddr: 0x68D4, symBinAddr: 0x1000080BC, symSize: 0x0 }
+  - { offsetInCU: 0xDE, offset: 0xDE, size: 0x8, addend: 0x0, symName: _mutex, symObjAddr: 0x550, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0x14C, offset: 0x14C, size: 0x8, addend: 0x0, symName: _full, symObjAddr: 0x590, symBinAddr: 0x100008040, symSize: 0x0 }
+  - { offsetInCU: 0x1A5, offset: 0x1A5, size: 0x8, addend: 0x0, symName: _empty, symObjAddr: 0x5C0, symBinAddr: 0x100008070, symSize: 0x0 }
+  - { offsetInCU: 0x2DFA, offset: 0x2DFA, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000038C0, symSize: 0x2D0 }
+  - { offsetInCU: 0x2F3C, offset: 0x2F3C, size: 0x8, addend: 0x0, symName: __Z8producerPv, symObjAddr: 0x2D0, symBinAddr: 0x100003B90, symSize: 0x150 }
+  - { offsetInCU: 0x2FAE, offset: 0x2FAE, size: 0x8, addend: 0x0, symName: __Z8consumerPv, symObjAddr: 0x420, symBinAddr: 0x100003CE0, symSize: 0x12B }
+...

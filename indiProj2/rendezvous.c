@@ -1,19 +1,9 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "common_threads.h"
-
-/**
- * Let’s now generalize this a bit by investigating the **rendezvous problem**.
- * The problem is as follows: you have two threads, each of which are about to enter the rendezvous point in the code.
- * Neither should exit this part of the code before the other enters it.
- * Consider using two semaphores for this task, and see `rendezvous.c` for details.
- */
-
-/**
- * If done correctly, each child should print their "before" message
- * before either prints their "after" message. Test by adding sleep(1)
- * calls in various locations.
- */
+#include <semaphore.h>
+#include <time.h>
 
 sem_t s1, s2;
 
@@ -21,7 +11,9 @@ void *child_1(void *arg) {
     printf("child 1: before\n");
 
     // what goes here?
+    sleep(1);
     sem_post(&s2);
+    
     sem_wait(&s1);
 
     printf("child 1: after\n");
@@ -33,6 +25,7 @@ void *child_2(void *arg) {
 
     // what goes here?
     sem_post(&s1);
+    sleep(1);
     sem_wait(&s2);
 
     printf("child 2: after\n");
@@ -45,6 +38,7 @@ int main(int argc, char *argv[]) {
 
     // init semaphores here
     sem_init(&s1, 1, 0);
+    sleep(1);
     sem_init(&s2, 1, 0);
 
     Pthread_create(&p1, NULL, child_1, NULL);

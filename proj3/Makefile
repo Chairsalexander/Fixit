@@ -1,20 +1,19 @@
 CC = gcc
 CFLAGS = -g -Wall
-ODIR = proj1_out
+ODIR = proj3_out
 LDIR = ../lib
-_OBJ = main.o
+_OBJ = sched_sim.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-main: main.c
+sched_sim: sched_sim.c
 	$(CC) $(CFLAGS) -o $@ $^
 
-compile: main.c
-	$(CC) $(CFLAGS) -o main main.c
+
 
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o main
+	rm -f $(ODIR)/*.o sched_sim
